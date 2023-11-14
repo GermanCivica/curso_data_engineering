@@ -13,10 +13,10 @@ WITH src_users_orders AS (
 renamed_casted AS (
     SELECT
           user_id
-        , updated_at
+        , updated_at as updated_at_utc
         , address_id
         , last_name
-        , created_at
+        , created_at as created_at_utc
         , phone_number
         , total_orders
         , first_name
