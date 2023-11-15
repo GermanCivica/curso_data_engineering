@@ -15,7 +15,7 @@ renamed_casted AS (
           _row
         , product_id
         , quantity
-        , month
+        , month --MONTH(month)
         , _fivetran_synced AS date_load
     FROM src_budget_products
     )
