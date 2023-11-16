@@ -1,0 +1,20 @@
+
+models:
+  - name: stg_order_items
+    description: ""
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: ""
+
+      - name: product_id
+        data_type: varchar
+        description: ""
+
+      - name: quantity
+        data_type: number
+        description: ""
+
+      - name: date_load
+        data_type: timestamp_tz
+        description: ""

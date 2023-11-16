@@ -1,0 +1,24 @@
+
+models:
+  - name: stg_products
+    description: ""
+    columns:
+      - name: product_id
+        data_type: varchar
+        description: ""
+
+      - name: price
+        data_type: float
+        description: ""
+
+      - name: name
+        data_type: varchar
+        description: ""
+
+      - name: inventory
+        data_type: number
+        description: ""
+
+      - name: date_load
+        data_type: timestamp_tz
+        description: ""

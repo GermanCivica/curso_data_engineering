@@ -1,0 +1,47 @@
+
+models:
+  - name: stg_users
+    description: ""
+    columns:
+      - name: user_id
+        data_type: varchar
+        description: ""
+        tests:
+          - unique
+          - not_null
+
+      - name: updated_at_utc
+        data_type: timestamp_tz
+        description: ""
+
+      - name: address_id
+        data_type: varchar
+        description: ""
+
+      - name: last_name
+        data_type: varchar
+        description: ""
+
+      - name: created_at_utc
+        data_type: timestamp_tz
+        description: ""
+
+      - name: phone_number
+        data_type: varchar
+        description: ""
+
+      - name: total_orders
+        data_type: number
+        description: ""
+
+      - name: first_name
+        data_type: varchar
+        description: ""
+
+      - name: email
+        data_type: varchar
+        description: ""
+
+      - name: date_load
+        data_type: timestamp_tz
+        description: ""

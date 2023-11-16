@@ -1,0 +1,52 @@
+
+models:
+  - name: stg_events
+    description: ""
+    columns:
+      - name: event_id
+        data_type: varchar
+        description: ""
+        tests:
+          - unique
+          - not_null
+
+      - name: page_url
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+
+      - name: event_type
+        data_type: varchar
+        description: ""
+        tests:
+          - accepted_values:
+              values:
+                - "checkout"
+                - "package_shipped"
+                - "add_to_cart"
+                - "page_view"
+
+      - name: user_id
+        data_type: varchar
+        description: ""
+
+      - name: product_id
+        data_type: varchar
+        description: ""
+
+      - name: session_id
+        data_type: varchar
+        description: ""
+
+      - name: created_at
+        data_type: timestamp_ntz
+        description: ""
+
+      - name: order_id
+        data_type: varchar
+        description: ""
+
+      - name: date_load
+        data_type: timestamp_tz
+        description: ""

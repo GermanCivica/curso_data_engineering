@@ -1,0 +1,60 @@
+
+models:
+  - name: stg_orders
+    description: ""
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: ""
+
+      - name: shipping_service
+        data_type: varchar
+        description: ""
+
+      - name: shipping_cost_usd
+        data_type: float
+        description: ""
+
+      - name: address_id
+        data_type: varchar
+        description: ""
+
+      - name: created_at_utc
+        data_type: timestamp_tz
+        description: ""
+
+      - name: promo_id
+        data_type: varchar
+        description: ""
+
+      - name: estimated_delivery_at_utc
+        data_type: timestamp_tz
+        description: ""
+
+      - name: item_order_cost_usd
+        data_type: float
+        description: ""
+
+      - name: user_id
+        data_type: varchar
+        description: ""
+
+      - name: total_order_cost_usd
+        data_type: float
+        description: ""
+
+      - name: delivered_at_utc
+        data_type: timestamp_tz
+        description: ""
+
+      - name: tracking_id
+        data_type: varchar
+        description: ""
+
+      - name: status_order
+        data_type: varchar
+        description: ""
+
+      - name: date_load
+        data_type: timestamp_tz
+        description: ""

@@ -1,37 +1,40 @@
-version: 2
 
-sources:
+models:
+  - name: stg_addresses
+    description: ""
+    columns:
+      - name: address_id
+        data_type: varchar
+        description: ""
+        tests:
+          - unique
+          - not_null
+          #- relationship con user_id de orders
 
-  - name: sql_server # name of the source 
-    schema: sql_server_dbo # this is the schema our raw data lives in
-    database: ALUMNO4_DEV_BRONZE_DB # this is the name of our database
+      - name: zipcode
+        data_type: number
+        description: ""
+        tests:
+          - not_null
 
-    quoting:
-      database: false
-      schema: false
-      identifier: false
+      - name: country
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
 
-    freshness:
-      warn_after: {count: 30, period: day}
-      error_after: {count: 180, period: day}
+      - name: address
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
 
-    tables:
+      - name: state
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
 
-      - name: addresses
-        loaded_at_field: _fivetran_synced
-        columns:
-          - name: _row
-            tests:
-              - unique
-              - not_null
-          - name: product_id
-            tests:
-              - unique
-              - relationships:
-                  to: source('sql_server_dbo','products')
-                  field: product_id
-          - name: quantity
-            tests:
-              - positive_values
-          - name: month
-          - name: _fivetran_synced
+      - name: date_load
+        data_type: timestamp_tz
+        description: ""
