@@ -12,7 +12,7 @@ WITH src_promos_orders AS (
 
 renamed_casted AS (
     SELECT
-          promo_id
+          {{dbt_utils.generate_surrogate_key(['promo_id'])}} as promo_id
         , discount
         , status
         , _fivetran_synced AS date_load

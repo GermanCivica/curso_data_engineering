@@ -6,6 +6,9 @@ models:
       - name: order_id
         data_type: varchar
         description: ""
+        tests:
+          - unique
+          - not_null
 
       - name: shipping_service
         data_type: varchar
@@ -18,14 +21,28 @@ models:
       - name: address_id
         data_type: varchar
         description: ""
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              field: address_id
+              to: ref('stg_addresses')
 
       - name: created_at_utc
         data_type: timestamp_tz
         description: ""
+        tests:
+          - not_null
 
       - name: promo_id
         data_type: varchar
         description: ""
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              field: promo_id
+              to: ref('stg_promos')
 
       - name: estimated_delivery_at_utc
         data_type: timestamp_tz
@@ -34,14 +51,24 @@ models:
       - name: item_order_cost_usd
         data_type: float
         description: ""
+        tests:
+          - not_null
 
       - name: user_id
         data_type: varchar
         description: ""
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              field: user_id
+              to: ref('stg_users')
 
       - name: total_order_cost_usd
         data_type: float
         description: ""
+        tests:
+          - not_null
 
       - name: delivered_at_utc
         data_type: timestamp_tz
@@ -50,6 +77,9 @@ models:
       - name: tracking_id
         data_type: varchar
         description: ""
+        tests:
+          - unique
+          - not_null
 
       - name: status_order
         data_type: varchar

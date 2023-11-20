@@ -30,22 +30,44 @@ models:
       - name: user_id
         data_type: varchar
         description: ""
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              field: user_id
+              to: ref('stg_users')
 
       - name: product_id
         data_type: varchar
         description: ""
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              field: product_id
+              to: ref('stg_orders')
 
       - name: session_id
         data_type: varchar
         description: ""
+        tests:
+          - not_null
 
       - name: created_at
         data_type: timestamp_ntz
         description: ""
+        tests:
+          - not_null
 
       - name: order_id
         data_type: varchar
         description: ""
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              field: order_id
+              to: ref('stg_orders')
 
       - name: date_load
         data_type: timestamp_tz

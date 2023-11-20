@@ -9,8 +9,7 @@ models:
         tests:
           - unique
           - not_null
-          #- relationship con user_id de orders
-
+      
       - name: zipcode
         data_type: number
         description: ""

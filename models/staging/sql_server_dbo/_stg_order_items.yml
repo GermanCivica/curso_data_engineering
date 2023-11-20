@@ -6,10 +6,22 @@ models:
       - name: order_id
         data_type: varchar
         description: ""
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              field: order_id
+              to: ref('stg_orders')
 
       - name: product_id
         data_type: varchar
         description: ""
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              field: user_id
+              to: ref('stg_users')
 
       - name: quantity
         data_type: number

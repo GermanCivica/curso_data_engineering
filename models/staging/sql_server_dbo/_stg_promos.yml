@@ -6,14 +6,24 @@ models:
       - name: promo_id
         data_type: varchar
         description: ""
+        tests:
+          - unique
+          - not_null
 
       - name: discount
         data_type: number
         description: ""
+        tests:
+          - not_null
 
       - name: status
         data_type: varchar
         description: ""
+        tests:
+          - accepted_values:
+              values:
+                - "inactive"
+                - "active"
 
       - name: date_load
         data_type: timestamp_tz
