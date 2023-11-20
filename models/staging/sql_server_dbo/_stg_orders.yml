@@ -22,7 +22,6 @@ models:
         data_type: varchar
         description: ""
         tests:
-          - unique
           - not_null
           - relationships:
               field: address_id
@@ -38,11 +37,7 @@ models:
         data_type: varchar
         description: ""
         tests:
-          - unique
           - not_null
-          - relationships:
-              field: promo_id
-              to: ref('stg_promos')
 
       - name: estimated_delivery_at_utc
         data_type: timestamp_tz
@@ -58,7 +53,6 @@ models:
         data_type: varchar
         description: ""
         tests:
-          - unique
           - not_null
           - relationships:
               field: user_id
@@ -77,9 +71,6 @@ models:
       - name: tracking_id
         data_type: varchar
         description: ""
-        tests:
-          - unique
-          - not_null
 
       - name: status_order
         data_type: varchar

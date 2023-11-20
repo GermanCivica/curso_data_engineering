@@ -20,7 +20,6 @@ models:
         data_type: varchar
         description: ""
         tests:
-          - unique
           - not_null
           - relationships:
               field: address_id

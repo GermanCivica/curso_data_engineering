@@ -16,10 +16,10 @@ renamed_casted AS (
         , page_url
         , event_type
         , user_id
-        , product_id
+        , DECODE(product_id, '', NULL, product_id) as product_id
         , session_id
         , created_at
-        , order_id
+        , DECODE(order_id, '', NULL, order_id) as order_id
         , _fivetran_synced AS date_load
     FROM src_events
     )

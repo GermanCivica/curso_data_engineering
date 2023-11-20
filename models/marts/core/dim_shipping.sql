@@ -7,7 +7,8 @@
 
 WITH stg_orders AS(
     SELECT
-          tracking_id
+          order_id
+        , tracking_id
         , shipping_service
         , shipping_cost_usd
         , status_order
@@ -30,7 +31,7 @@ stg_addresses AS(
 
 renamed_casted AS (
     SELECT
-          {{dbt_utils.generate_surrogate_key(['order_id','tracking_id'])}} AS shipping_id
+          {{dbt_utils.generate_surrogate_key(['order_id', 'tracking_id'])}} AS shipping_id
         , stg_orders.tracking_id
         , stg_orders.shipping_service 
         , stg_orders.shipping_cost_usd 

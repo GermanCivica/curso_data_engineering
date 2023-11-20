@@ -20,8 +20,8 @@ models:
           - unique
           - not_null
           - relationships:
-              field: user_id
-              to: ref('stg_users')
+              field: product_id
+              to: ref('stg_products')
 
       - name: quantity
         data_type: number
