@@ -27,5 +27,4 @@ renamed_casted AS (
     FROM stg_budget_products
     )
 
-SELECT * FROM renamed_casted WHERE product_id is null
---SELECT * FROM renamed_casted
+SELECT * FROM renamed_casted

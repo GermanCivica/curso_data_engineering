@@ -38,6 +38,9 @@ models:
         description: ""
         tests:
           - not_null
+          - relationships:
+              to: ref('stg_promos')
+              field: promo_id
 
       - name: estimated_delivery_at_utc
         data_type: timestamp_tz

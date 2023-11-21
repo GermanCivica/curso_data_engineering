@@ -10,11 +10,11 @@ models:
       - name: product_id
         tests:
           - not_null
-          #- relationships:
-          #    to: source('sql_server_dbo','products')
-          #    field: product_id
+          - relationships:
+              to: source('sql_server_dbo','products')
+              field: product_id
       - name: quantity
-      #  tests:
-      #    - positive_values
+        tests:
+          - no_negatives
       - name: month
       - name: _fivetran_synced
