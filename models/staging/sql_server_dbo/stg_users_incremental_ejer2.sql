@@ -1,20 +1,18 @@
 
 {{
   config(
-    materialized='incremental',
-    unique_key='user_id',
-    on_schema_change='fail'
+    materialized='incremental'
   )
 }}
 
 WITH src_users_orders AS (
     SELECT * 
-    FROM {{ source('sql_server_dbo', 'users') }}
-    --{% if is_incremental() %}
---
-	--  where _fivetran_synced > (select max(_fivetran_synced) from {{ this }})
---
-    --{% endif %}
+    FROM {{ source('sql_server_dbo_ejer2', 'users_prueba_incremental') }}
+    {% if is_incremental() %}
+
+	  where _fivetran_synced > (select max(_fivetran_synced) from {{ this }})
+
+    {% endif %}
     ),
 
 renamed_casted AS (

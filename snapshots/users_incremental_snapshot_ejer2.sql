@@ -1,4 +1,4 @@
-{% snapshot users_incremental_snapshot %}
+{% snapshot users_incremental_snapshot_ejer2 %}
 
 {{
     config(
@@ -9,7 +9,7 @@
         )
 }}
 
-select * from {{ ref('stg_users_incremental') }}
-where f_carga = (select max(f_carga) from {{ ref('stg_users_incremental') }})
+select * from {{ ref('stg_users_incremental_ejer2') }}
+where f_carga = (select max(f_carga) from {{ ref('stg_users_incremental_ejer2') }})
 
 {% endsnapshot %}

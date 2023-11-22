@@ -13,7 +13,7 @@ WITH src_orders AS (
 renamed_casted AS (
     SELECT
           order_id
-        , DECODE(shipping_service, '', NULL, shipping_service) as shipping_service
+        , {{dbt_utils.generate_surrogate_key(['shipping_service'])}} as shipping_service
         , shipping_cost as shipping_cost_usd
         , address_id
         , created_at as created_at_utc
@@ -23,7 +23,7 @@ renamed_casted AS (
         , user_id
         , order_total as total_order_cost_usd
         , delivered_at as delivered_at_utc
-        , DECODE(tracking_id, '', NULL, {{dbt_utils.generate_surrogate_key(['tracking_id'])}}) as tracking_id
+        , {{dbt_utils.generate_surrogate_key(['tracking_id'])}} as tracking_id
         , {{dbt_utils.generate_surrogate_key(['status'])}} as status_order
         , _fivetran_synced AS date_load
     FROM src_orders

@@ -21,9 +21,9 @@ renamed_casted AS (
     SELECT
           _row
         , product_id
-        , quantity
-        , month 
-        , _fivetran_synced
+        , quantity 
+        , month
+        , _fivetran_synced as date_load
     FROM stg_budget_products
     )
 
