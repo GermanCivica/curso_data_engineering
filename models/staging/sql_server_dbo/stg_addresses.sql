@@ -17,7 +17,7 @@ renamed_casted AS (
         , country
         , address
         , state
-        , _fivetran_synced AS date_load
+        , {{ dbt_date.convert_timezone("_fivetran_synced", "America/Los_Angeles", "UTC") }} AS date_load_utc
     FROM src_addresses_orders
     )
 

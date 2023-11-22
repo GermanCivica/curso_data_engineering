@@ -21,7 +21,7 @@ renamed_casted AS (
         , total_orders
         , first_name
         , email
-        , _fivetran_synced AS date_load
+        , {{ dbt_date.convert_timezone("_fivetran_synced", "America/Los_Angeles", "UTC") }} AS date_load_utc
     FROM src_users_orders
     )
 

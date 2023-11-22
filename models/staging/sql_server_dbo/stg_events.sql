@@ -18,9 +18,9 @@ renamed_casted AS (
         , user_id
         , DECODE(product_id, '', NULL, product_id) as product_id
         , session_id
-        , created_at
+        , {{ dbt_date.convert_timezone("created_at", "America/Los_Angeles", "UTC") }} as created_at_utc
         , DECODE(order_id, '', NULL, order_id) as order_id
-        , _fivetran_synced AS date_load
+        , {{ dbt_date.convert_timezone("_fivetran_synced", "America/Los_Angeles", "UTC") }} as date_load_utc
     FROM src_events
     )
 
