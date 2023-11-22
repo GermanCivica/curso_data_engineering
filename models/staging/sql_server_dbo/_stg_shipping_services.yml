@@ -1,0 +1,17 @@
+
+models:
+  - name: stg_shipping_services
+    description: ""
+    columns:
+      - name: shipping_service_id
+        data_type: varchar
+        description: ""
+        tests:
+          - unique
+          - not_null
+      
+      - name: shipping_service_name
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
