@@ -5,13 +5,13 @@
   )
 }}
 
-WITH stg_orders AS(
+WITH stg_orders AS (
     SELECT
           order_id
         , tracking_id
-        , shipping_service
+        , shipping_service_id
         , shipping_cost_usd
-        , status_order
+        , status_order_id
         , estimated_delivery_at_utc
         , delivered_at_utc
         , address_id
@@ -19,7 +19,7 @@ WITH stg_orders AS(
     WHERE tracking_id <> ''
 ),
 
-stg_addresses AS(
+stg_addresses AS (
     SELECT
           country
         , state
@@ -33,16 +33,9 @@ renamed_casted AS (
     SELECT
           {{dbt_utils.generate_surrogate_key(['order_id', 'tracking_id'])}} AS shipping_id
         , stg_orders.tracking_id
-        , stg_orders.shipping_service 
+        , stg_orders.shipping_service_id
         , stg_orders.shipping_cost_usd 
-        , DECODE(stg_orders.status_order
-            , 'aeb1941c0628f8eb9cec84d12725b6b8'
-            , 'preparing'
-            , '0e3a8d38d6a037ceca6885c6b654124e'
-            , 'delivered'
-            , '8407efe4e76e884909955a5e7293661e'
-            , 'shipped'
-            ) AS STATUS_ORDER
+        , stg_orders.status_order_id
         , stg_orders.estimated_delivery_at_utc
         , stg_orders.delivered_at_utc
         , stg_addresses.country AS shipped_country
