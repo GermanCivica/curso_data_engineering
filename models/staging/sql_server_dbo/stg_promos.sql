@@ -14,7 +14,7 @@ renamed_casted AS (
     SELECT
           {{dbt_utils.generate_surrogate_key(['promo_id'])}} as promo_id
         , promo_id as promo_name
-        , discount
+        , discount as discount_usd
         , status
         , {{ dbt_date.convert_timezone("_fivetran_synced", "America/Los_Angeles", "UTC") }} AS date_load_utc
     FROM src_promos_orders

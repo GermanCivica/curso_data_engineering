@@ -13,7 +13,7 @@ WITH src_products_orders AS (
 renamed_casted AS (
     SELECT
           product_id
-        , price
+        , price as price_usd
         , name
         , inventory
         , {{ dbt_date.convert_timezone("_fivetran_synced", "America/Los_Angeles", "UTC") }} AS date_load_utc

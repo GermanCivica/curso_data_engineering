@@ -1,24 +1,24 @@
 
 models:
   - name: stg_events
-    description: ""
+    description: "Tabla que recoge todos los eventos en la web del marketplace, desde visita de urls de artículos a su compra."
     columns:
       - name: event_id
         data_type: varchar
-        description: ""
+        description: "PK. Identificador del evento."
         tests:
           - unique
           - not_null
 
       - name: page_url
         data_type: varchar
-        description: ""
+        description: "Dirección web visitada."
         tests:
           - not_null
 
       - name: event_type
         data_type: varchar
-        description: ""
+        description: "Tipo de evento, hay 4 valores posibles [checkout, package_shipped, add_to_cart, page_view]"
         tests:
           - accepted_values:
               values:
@@ -29,7 +29,7 @@ models:
 
       - name: user_id
         data_type: varchar
-        description: ""
+        description: "FK. Identificador del usuario que realizó la acción registrada."
         tests:
           - not_null
           - relationships:
@@ -40,7 +40,7 @@ models:
 
       - name: product_id
         data_type: varchar
-        description: ""
+        description: "FK. Identificador del producto comprado."
         tests:
           - relationships:
               field: product_id
@@ -50,19 +50,19 @@ models:
 
       - name: session_id
         data_type: varchar
-        description: ""
+        description: "Identificación de la sesión del usuario donde se producen todas las acciones registradas."
         tests:
           - not_null
 
       - name: created_at
         data_type: timestamp_ntz
-        description: ""
+        description: "Fecha y hora de realización de la acción registrada."
         tests:
           - not_null
 
       - name: order_id
         data_type: varchar
-        description: ""
+        description: "FK. Identificador del pedido realizado."
         tests:
           - relationships:
               field: order_id
@@ -72,4 +72,4 @@ models:
 
       - name: date_load
         data_type: timestamp_tz
-        description: ""
+        description: "Fecha de carga del dato en nuestro warehouse"

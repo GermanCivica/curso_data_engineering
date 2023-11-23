@@ -1,24 +1,24 @@
 
 models:
   - name: stg_promos
-    description: ""
+    description: "Tabla con la información referente a las posibles promociones."
     columns:
       - name: promo_id
         data_type: varchar
-        description: ""
+        description: "PK. Identificador de la promoción."
         tests:
           - unique
           - not_null
 
-      - name: discount
+      - name: discount_usd
         data_type: number
-        description: ""
+        description: "Cantidad de descuento."
         tests:
           - not_null
 
       - name: status
         data_type: varchar
-        description: ""
+        description: "Indicador de si la promoción está activa o no."
         tests:
           - accepted_values:
               values:
@@ -27,4 +27,4 @@ models:
 
       - name: date_load
         data_type: timestamp_tz
-        description: ""
+        description: "Fecha de carga del dato en nuestro warehouse"

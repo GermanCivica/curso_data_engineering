@@ -1,26 +1,31 @@
 
 models:
   - name: stg_orders
-    description: ""
+    description: "Tabla con infomación básica sobre los pedidos."
     columns:
       - name: order_id
         data_type: varchar
-        description: ""
+        description: "PK. Identificador único del pedido."
         tests:
           - unique
           - not_null
 
-      - name: shipping_service
+      - name: shipping_service_id
         data_type: varchar
-        description: ""
+        description: "FK. Identificador de la compañía de reparto que transporta el peido"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_shipping_services')
+              field: shipping_service_id
 
       - name: shipping_cost_usd
         data_type: float
-        description: ""
+        description: "Gastos de envío."
 
       - name: address_id
         data_type: varchar
-        description: ""
+        description: "FK. Identificador de la dirección de envío."
         tests:
           - not_null
           - relationships:
@@ -29,13 +34,13 @@ models:
 
       - name: created_at_utc
         data_type: timestamp_tz
-        description: ""
+        description: "Fecha y hora de creación del pedido."
         tests:
           - not_null
 
       - name: promo_id
         data_type: varchar
-        description: ""
+        description: "FK. Identificador de la promoción aplicada a la compra."
         tests:
           - not_null
           - relationships:
@@ -44,17 +49,17 @@ models:
 
       - name: estimated_delivery_at_utc
         data_type: timestamp_tz
-        description: ""
+        description: "Estimación de entrega del pedido."
 
       - name: item_order_cost_usd
         data_type: float
-        description: ""
+        description: "Coste total de los artículos del pedido."
         tests:
           - not_null
 
       - name: user_id
         data_type: varchar
-        description: ""
+        description: "FK. Identificador del usuario que realizó el pedido."
         tests:
           - not_null
           - relationships:
@@ -63,22 +68,29 @@ models:
 
       - name: total_order_cost_usd
         data_type: float
-        description: ""
+        description: "Coste total del pedido, artículos junto con gastos de envío."
         tests:
           - not_null
 
       - name: delivered_at_utc
         data_type: timestamp_tz
-        description: ""
+        description: "Fecha de entrega del pedido."
 
       - name: tracking_id
         data_type: varchar
-        description: ""
+        description: "Número de seguimiento del pedido."
 
-      - name: status_order
+      - name: status_order_id
         data_type: varchar
-        description: ""
+        description: "Estado del envío."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('status_order_id')
+              field: status_order_id
 
       - name: date_load
         data_type: timestamp_tz
-        description: ""
+        description: "Fecha de carga del dato en nuestro warehouse."
+        tests:
+          - not_null

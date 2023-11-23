@@ -1,24 +1,24 @@
 
 models:
   - name: stg_users
-    description: ""
+    description: "Información referente a los usuarios registrados en el marketplace."
     columns:
       - name: user_id
         data_type: varchar
-        description: ""
+        description: "PK. Identificador de usuario."
         tests:
           - unique
           - not_null
 
       - name: updated_at_utc
         data_type: timestamp_tz
-        description: ""
+        description: "Última actualización de la información de usuario."
         tests:
           - not_null
 
       - name: address_id
         data_type: varchar
-        description: ""
+        description: "FK. Identificador de la dirección registrada del usuario."
         tests:
           - not_null
           - relationships:
@@ -27,40 +27,40 @@ models:
 
       - name: last_name
         data_type: varchar
-        description: ""
+        description: "Apellido del usuario."
         tests:
           - not_null
 
       - name: created_at_utc
         data_type: timestamp_tz
-        description: ""
+        description: "Fecha de creación del usuario."
         tests:
           - not_null
 
       - name: phone_number
         data_type: varchar
-        description: ""
+        description: "Número de teléfono del usuario."
         tests:
           - not_null
 
       - name: total_orders
         data_type: number
-        description: ""
+        description: "Número total de pedidos realizados por el usuario."
 
       - name: first_name
         data_type: varchar
-        description: ""
+        description: "Nombre del usuario."
         tests:
           - not_null
 
       - name: email
         data_type: varchar
-        description: ""
+        description: "Email del usuario."
         tests:
           - not_null
 
       - name: date_load
         data_type: timestamp_tz
-        description: ""
+        description: "Fecha de carga del dato en nuestro warehouse"
         tests:
           - not_null
