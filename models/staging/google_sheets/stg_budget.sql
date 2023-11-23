@@ -1,3 +1,4 @@
+
 {{
     config(
         materialized='incremental',
@@ -5,7 +6,6 @@
         on_schema_change='fail'
     )
 }}
-
 
 WITH stg_budget_products AS (
     SELECT * 
@@ -19,7 +19,7 @@ WITH stg_budget_products AS (
 
 renamed_casted AS (
     SELECT
-          _row
+          {{dbt_utils.generate_surrogate_key(['_row'])}} as product_budget_id
         , product_id
         , quantity 
         , month
