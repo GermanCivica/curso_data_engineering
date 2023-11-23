@@ -13,10 +13,10 @@ WITH src_users_orders AS (
 renamed_casted AS (
     SELECT
           user_id
-        , updated_at as updated_at_utc
+        , {{ dbt_date.convert_timezone("updated_at", "America/Los_Angeles", "UTC") }} as updated_at_utc
         , address_id
         , last_name
-        , created_at as created_at_utc
+        , {{ dbt_date.convert_timezone("created_at", "America/Los_Angeles", "UTC") }} as created_at_utc
         , phone_number
         , total_orders
         , first_name
