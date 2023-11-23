@@ -2,7 +2,7 @@
 sources:
   - name: sql_server_dbo
     description: ""
-    database: alumno4_dev_bronze_db
+    database: "{{ env_var('DBT_ENVIRONMENTS') }}_BRONZE_DB"
     tables:
       - name: addresses
         description: ""
