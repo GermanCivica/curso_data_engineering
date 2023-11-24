@@ -54,7 +54,7 @@ models:
         tests:
           - not_null
 
-      - name: created_at
+      - name: created_at_utc
         data_type: timestamp_ntz
         description: "Fecha y hora de realización de la acción registrada."
         tests:
@@ -70,6 +70,6 @@ models:
               config:
                 where: "order_id is not null"
 
-      - name: date_load
+      - name: date_load_utc
         data_type: timestamp_tz
         description: "Fecha de carga del dato en nuestro warehouse"

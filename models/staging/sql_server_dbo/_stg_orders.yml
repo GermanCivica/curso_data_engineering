@@ -89,7 +89,7 @@ models:
               to: ref('status_order_id')
               field: status_order_id
 
-      - name: date_load
+      - name: date_load_utc
         data_type: timestamp_tz
         description: "Fecha de carga del dato en nuestro warehouse."
         tests:

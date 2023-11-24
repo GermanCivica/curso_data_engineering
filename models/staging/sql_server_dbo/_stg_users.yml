@@ -59,7 +59,7 @@ models:
         tests:
           - not_null
 
-      - name: date_load
+      - name: date_load_utc
         data_type: timestamp_tz
         description: "Fecha de carga del dato en nuestro warehouse"
         tests:

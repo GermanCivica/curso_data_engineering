@@ -23,7 +23,7 @@ renamed_casted AS (
         , product_id
         , quantity 
         , month
-        , _fivetran_synced as date_load
+        , _fivetran_synced as date_load_utc
     FROM stg_budget_products
     )
 
