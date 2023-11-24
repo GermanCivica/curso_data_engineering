@@ -3,7 +3,7 @@ models:
   - name: stg_budget
     description: ""
     columns:
-      - name: _row
+      - name: product_budget_id
         tests:
           - unique
           - not_null
