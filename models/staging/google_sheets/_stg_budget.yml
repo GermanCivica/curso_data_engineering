@@ -1,0 +1,20 @@
+
+models:
+  - name: stg_budget
+    description: ""
+    columns:
+      - name: _row
+        tests:
+          - unique
+          - not_null
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              to: source('sql_server_dbo','products')
+              field: product_id
+      - name: quantity
+        tests:
+          - no_negatives
+      - name: month
+      - name: _fivetran_synced

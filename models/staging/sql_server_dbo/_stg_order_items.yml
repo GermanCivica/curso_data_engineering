@@ -1,0 +1,30 @@
+
+models:
+  - name: stg_order_items
+    description: "Registro del producto y cantidad de los mismos contenida en los pedidos."
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: "FK. Identificador del pedido."
+        tests:
+          - not_null
+          - relationships:
+              field: order_id
+              to: ref('stg_orders')
+
+      - name: product_id
+        data_type: varchar
+        description: "FK. Identificador del producto."
+        tests:
+          - not_null
+          - relationships:
+              field: product_id
+              to: ref('stg_products')
+
+      - name: quantity
+        data_type: number
+        description: "Cantidad de producto específico por pedido."
+
+      - name: date_load
+        data_type: timestamp_tz
+        description: "Fecha de carga del dato en nuestro warehouse"

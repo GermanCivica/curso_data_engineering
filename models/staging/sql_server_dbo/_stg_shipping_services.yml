@@ -1,0 +1,17 @@
+
+models:
+  - name: stg_shipping_services
+    description: "Información sobre los servicios de envío de pedidos."
+    columns:
+      - name: shipping_service_id
+        data_type: varchar
+        description: "PK. Identificador del servicio de envío."
+        tests:
+          - unique
+          - not_null
+      
+      - name: shipping_service_name
+        data_type: varchar
+        description: "Nombre del servicio de envío."
+        tests:
+          - not_null
