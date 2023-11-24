@@ -12,7 +12,7 @@ WITH stg_budget_products AS (
     FROM {{ source('google_sheets','budget') }}
 {% if is_incremental() %}
 
-	  where _fivetran_synced > (select max(_fivetran_synced) from {{ this }})
+	  where _fivetran_synced > (select max(date_load_utc) from {{ this }})
 
 {% endif %}
     ),
