@@ -33,7 +33,6 @@ order_events AS (
         , product_id
         , order_id
         , created_at_utc
-        --, COALESCE(product_id, order_id) AS product_order_id
     FROM (SELECT
                   session_id
                 , event_id

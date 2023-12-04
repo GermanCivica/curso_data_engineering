@@ -18,7 +18,7 @@ renamed_casted AS (
         , address_id
         , {{dbt_date.convert_timezone("created_at", "America/Los_Angeles", "UTC")}} as created_at_utc
         , DECODE(promo_id, '', {{dbt_utils.generate_surrogate_key(["'No Promo'"])}}, {{dbt_utils.generate_surrogate_key(['promo_id'])}}) as promo_id
-        , {{dbt_date.convert_timezone(" estimated_delivery_at", "America/Los_Angeles", "UTC")}} as estimated_delivery_at_utc
+        , {{dbt_date.convert_timezone("estimated_delivery_at", "America/Los_Angeles", "UTC")}} as estimated_delivery_at_utc
         , order_cost as item_order_cost_usd
         , user_id
         , order_total as total_order_cost_usd

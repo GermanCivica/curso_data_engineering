@@ -28,8 +28,10 @@ models:
         tests:
           - not_null
 
-      - name: date_load
+      - name: date_load_utc
         data_type: timestamp_tz
+        tests:
+          - utc_times
       
   - name: stg_events
     columns:
@@ -82,6 +84,7 @@ models:
         data_type: timestamp_ntz
         tests:
           - not_null
+          - utc_times
 
       - name: order_id
         data_type: varchar
@@ -94,6 +97,8 @@ models:
 
       - name: date_load_utc
         data_type: timestamp_tz
+        tests:
+          - utc_times
 
   - name: stg_order_items
     columns:
@@ -116,8 +121,10 @@ models:
       - name: quantity
         data_type: number
 
-      - name: date_load
+      - name: date_load_utc
         data_type: timestamp_tz
+        tests:
+          - utc_times
   
   - name: stg_orders        
     columns:
@@ -150,6 +157,7 @@ models:
         data_type: timestamp_tz
         tests:
           - not_null
+          - utc_times
 
       - name: promo_id
         data_type: varchar
@@ -161,6 +169,8 @@ models:
 
       - name: estimated_delivery_at_utc
         data_type: timestamp_tz
+        tests:
+          - utc_times
 
       - name: item_order_cost_usd
         data_type: float
@@ -182,6 +192,8 @@ models:
 
       - name: delivered_at_utc
         data_type: timestamp_tz
+        tests:
+          - utc_times
 
       - name: tracking_id
         data_type: varchar
@@ -198,6 +210,7 @@ models:
         data_type: timestamp_tz
         tests:
           - not_null
+          - utc_times
 
   - name: stg_products
     columns:
@@ -226,6 +239,7 @@ models:
         data_type: timestamp_tz
         tests:
           - not_null
+          - utc_times
 
   - name: stg_promos
     columns:
@@ -248,8 +262,10 @@ models:
                 - "inactive"
                 - "active"
 
-      - name: date_load
+      - name: date_load_utc
         data_type: timestamp_tz
+        tests:
+          - utc_times
 
   - name: stg_users
     columns:
@@ -263,6 +279,7 @@ models:
         data_type: timestamp_tz
         tests:
           - not_null
+          - utc_times
 
       - name: address_id
         data_type: varchar
@@ -281,6 +298,7 @@ models:
         data_type: timestamp_tz
         tests:
           - not_null
+          - utc_times
 
       - name: phone_number
         data_type: varchar
@@ -304,3 +322,4 @@ models:
         data_type: timestamp_tz
         tests:
           - not_null
+          - utc_times

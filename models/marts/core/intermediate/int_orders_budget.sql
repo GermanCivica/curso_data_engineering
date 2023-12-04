@@ -19,7 +19,7 @@ total_products_ordered AS (
     FROM (SELECT
                 product_id
               , SUM(quantity) OVER (PARTITION BY product_id) AS total_quantity_ordered
-         FROM stg_order_items)
+          FROM stg_order_items)
     GROUP BY product_id, total_quantity_ordered
 ),
 

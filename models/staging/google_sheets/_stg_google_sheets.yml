@@ -1,7 +1,6 @@
 
 models:
   - name: stg_budget
-    description: ""
     columns:
       - name: product_budget_id
         tests:
@@ -17,4 +16,6 @@ models:
         tests:
           - no_negatives
       - name: month
-      - name: _fivetran_synced
+      - name: date_load_utc
+        tests:
+            - utc_times
