@@ -35,7 +35,7 @@ dim_shipping AS (
     FROM {{ ref('dim_shipping') }}
 {% if is_incremental() %}
 
-	  where order_data_load_utc > (select max(date_load_utc) from {{ this }})
+	  where order_data_load_utc > (select max(order_data_load_utc) from {{ this }})
 
 {% endif %}
 ),
