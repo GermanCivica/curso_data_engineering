@@ -10,7 +10,7 @@ WITH stg_orders AS (
     FROM {{ ref('stg_orders') }}
 {% if is_incremental() %}
 
-    WHERE (tracking_id <> '' AND date_load_utc > (select max(created_at_utc) from {{ this }}))
+    where (tracking_id <> '' AND date_load_utc > (select max(created_at_utc) from {{ this }}))
 
 {% endif %}
 ),
@@ -25,7 +25,7 @@ stg_events AS (
     FROM {{ ref('stg_events') }}
 {% if is_incremental() %}
 
-	  where date_load_utc > (select max(date_load_utc) from {{ this }})
+    where date_load_utc > (select max(created_at_utc) from {{ this }})
 
 {% endif %}
 ),
@@ -35,7 +35,7 @@ dim_shipping AS (
     FROM {{ ref('dim_shipping') }}
 {% if is_incremental() %}
 
-	  where order_data_load_utc > (select max(order_data_load_utc) from {{ this }})
+	where order_data_load_utc > (select max(created_at_utc) from {{ this }})
 
 {% endif %}
 ),
@@ -58,7 +58,7 @@ order_events AS (
                 , order_id
                 , created_at_utc
                 , ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY created_at_utc) AS action_counter
-          FROM {{ ref('stg_events') }}
+          FROM stg_events
           WHERE event_type = 'add_to_cart' OR event_type = 'checkout')
 ),
 
