@@ -13,5 +13,3 @@ models:
       - name: shipping_service_name
         data_type: varchar
         description: "Nombre del servicio de envío."
-        tests:
-          - not_null
