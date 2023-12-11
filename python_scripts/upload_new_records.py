@@ -10,8 +10,7 @@ SNW_WRH = 'WH_CURSO_DATA_ENGINEERING'
 SNW_DB = 'ALUMNO4_DEV_BRONZE_DB'
 SNW_SCHEMA = 'SQL_SERVER_DBO'
 SNW_ROLE = 'CURSO_DATA_ENGINEERING_2023'
-#SNW_CHANGING_TABLES = ['addresses', 'users', 'events', 'order_items', 'orders']
-SNW_CHANGING_TABLES = ['users']
+SNW_CHANGING_TABLES = ['addresses', 'users', 'events', 'order_items', 'orders']
 
 DATA_TABLES_PATH = 'C:\\Users\\germa\\Desktop\\Proyecto_final\\python_scripts\\data_tables\\'
 
