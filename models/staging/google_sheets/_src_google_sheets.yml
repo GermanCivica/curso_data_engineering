@@ -18,10 +18,22 @@ sources:
     tables:
 
       - name: budget
+        description: Table containing the inventory of each product by month
         loaded_at_field: _fivetran_synced
         columns:
-          - name: _row
+          - name: product_budget_id
+            data_type: varchar
+            description: PK. Hash code that identifies uniquely each row in the table
           - name: product_id
+            data_type: varchar
+            description: ID of the product
           - name: quantity
+            data_type: number
+            description: How many units of each product were bought for sale each month
           - name: month
+            data_type: date
+            description: Month of the budget, it is a date with yyyy-mm-dd format with the last day of the month by default
           - name: _fivetran_synced
+            data_type: timestamp_tz
+            description: Timestamp with date in which each row was added to the table
+ 

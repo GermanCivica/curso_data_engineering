@@ -1,12 +1,18 @@
+
 {{
-  config(
-    materialized='table'
-  )
+    config(
+        materialized='incremental',
+    )
 }}
 
 WITH stg_orders AS (
     SELECT * 
     FROM {{ ref('stg_orders') }}
+{% if is_incremental() %}
+
+    where (tracking_id <> '' AND date_load_utc > (select max(created_at_utc) from {{ this }}))
+
+{% endif %}
 ),
 
 stg_products AS (
@@ -17,11 +23,21 @@ stg_products AS (
 stg_events AS (
     SELECT *
     FROM {{ ref('stg_events') }}
+{% if is_incremental() %}
+
+    where date_load_utc > (select max(created_at_utc) from {{ this }})
+
+{% endif %}
 ),
 
 dim_shipping AS (
     SELECT *
     FROM {{ ref('dim_shipping') }}
+{% if is_incremental() %}
+
+	where order_data_load_utc > (select max(created_at_utc) from {{ this }})
+
+{% endif %}
 ),
 
 order_events AS (
@@ -33,7 +49,6 @@ order_events AS (
         , product_id
         , order_id
         , created_at_utc
-        --, COALESCE(product_id, order_id) AS product_order_id
     FROM (SELECT
                   session_id
                 , event_id
@@ -43,7 +58,7 @@ order_events AS (
                 , order_id
                 , created_at_utc
                 , ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY created_at_utc) AS action_counter
-          FROM {{ ref('stg_events') }}
+          FROM stg_events
           WHERE event_type = 'add_to_cart' OR event_type = 'checkout')
 ),
 
