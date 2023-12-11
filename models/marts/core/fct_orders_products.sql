@@ -1,12 +1,18 @@
+
 {{
-  config(
-    materialized='table'
-  )
+    config(
+        materialized='incremental',
+    )
 }}
 
 WITH stg_orders AS (
     SELECT * 
     FROM {{ ref('stg_orders') }}
+{% if is_incremental() %}
+
+    WHERE (tracking_id <> '' AND date_load_utc > (select max(created_at_utc) from {{ this }}))
+
+{% endif %}
 ),
 
 stg_products AS (
@@ -17,11 +23,21 @@ stg_products AS (
 stg_events AS (
     SELECT *
     FROM {{ ref('stg_events') }}
+{% if is_incremental() %}
+
+	  where date_load_utc > (select max(date_load_utc) from {{ this }})
+
+{% endif %}
 ),
 
 dim_shipping AS (
     SELECT *
     FROM {{ ref('dim_shipping') }}
+{% if is_incremental() %}
+
+	  where order_data_load_utc > (select max(date_load_utc) from {{ this }})
+
+{% endif %}
 ),
 
 order_events AS (

@@ -1,14 +1,20 @@
 
 {{
     config(
-    materialized='table'
+    materialized='table',
+    unique_key='shipping_id',
+    on_schema_change='fail'
   )
 }}
 
 WITH stg_orders AS (
     SELECT *
     FROM {{ ref('stg_orders') }}
-    WHERE tracking_id <> ''
+{% if is_incremental() %}
+
+    WHERE (tracking_id <> '' AND date_load_utc > (select max(date_load_utc) from {{ this }}))
+
+{% endif %}
 ),
 
 stg_addresses AS (
@@ -18,12 +24,23 @@ stg_addresses AS (
         , zipcode
         , address
         , address_id
+        , date_load_utc
     FROM {{ ref('stg_addresses') }}
+{% if is_incremental() %}
+
+	  where date_load_utc > (select max(date_load_utc) from {{ this }})
+
+{% endif %}
 ),
 
 stg_order_items AS (
     SELECT *
     FROM {{ ref('stg_order_items') }}
+{% if is_incremental() %}
+
+	  where date_load_utc > (select max(date_load_utc) from {{ this }})
+
+{% endif %}
 ),
 
 products_per_order AS (
@@ -51,6 +68,7 @@ renamed_casted AS (
         , stg_addresses.state AS shipped_state
         , stg_addresses.zipcode AS shipped_zipcode
         , stg_addresses.address AS shipped_address
+        , stg_orders.date_load_utc AS order_data_load_utc
     FROM stg_orders
     JOIN products_per_order ON stg_orders.order_id = products_per_order.order_id
     JOIN stg_addresses ON stg_orders.address_id = stg_addresses.address_id
