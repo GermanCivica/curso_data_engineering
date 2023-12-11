@@ -208,3 +208,23 @@ sources:
           - name: _fivetran_synced
             data_type: timestamp_tz
             description: Load date of the data in the Warehouse
+
+      - name: stg_order_status
+        description: "Posibles estados de un pedido"
+        columns:
+          - name: status_order_id
+            data_type: varchar
+            description: "PK. Identificador del estado del pedido."         
+          - name: status_order_descr
+            data_type: varchar
+            description: "Descripción del estado del pedido."
+      
+      - name: stg_shipping_services
+        description: "Información sobre los servicios de envío de pedidos."
+        columns:
+          - name: shipping_service_id
+            data_type: varchar
+            description: "PK. Identificador del servicio de envío."   
+          - name: shipping_service_name
+            data_type: varchar
+            description: "Nombre del servicio de envío."
