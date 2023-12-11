@@ -1,14 +1,21 @@
 
 {{
-  config(
-    materialized='view'
-  )
+    config(
+        materialized='incremental',
+        unique_key='event_id',
+        on_schema_change='fail'
+    )
 }}
 
 WITH src_events AS (
     SELECT * 
     FROM {{ source('sql_server_dbo', 'events') }}
-    ),
+{% if is_incremental() %}
+
+	  where _fivetran_synced > (select max(date_load_utc) from {{ this }})
+
+{% endif %}
+),
 
 renamed_casted AS (
     SELECT

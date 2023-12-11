@@ -1,14 +1,19 @@
  
 {{
-  config(
-    materialized='view'
-  )
+    config(
+        materialized='incremental',
+    )
 }}
 
 WITH src_order_items AS (
     SELECT * 
     FROM {{ source('sql_server_dbo', 'order_items') }}
-    ),
+{% if is_incremental() %}
+
+	  where _fivetran_synced > (select max(date_load_utc) from {{ this }})
+
+{% endif %}
+),
 
 renamed_casted AS (
     SELECT

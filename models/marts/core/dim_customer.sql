@@ -1,6 +1,20 @@
+
+{{
+  config(
+    materialized='incremental',
+    unique_key='user_id',
+    on_schema_change='fail'
+  )
+}}
+
 WITH stg_users AS (
     SELECT * 
     FROM {{ ref('stg_users') }}
+{% if is_incremental() %}
+
+	  where date_load_utc > (select max(date_load_utc) from {{ this }})
+
+{% endif %}
     ),
 
 renamed_casted AS (

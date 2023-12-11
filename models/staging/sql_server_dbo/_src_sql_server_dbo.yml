@@ -1,210 +1,230 @@
 
 sources:
   - name: sql_server_dbo
-    description: "Fuente de datos desde SQL Server."
+    description: Data Source from SQL Server.
     database: "{{ env_var('DBT_ENVIRONMENTS') }}_BRONZE_DB"
     tables:
       - name: addresses
-        description: "Tabla con la información de las direcciones de usuarios registrados y destinatarios de envíos."
+        description: Table with the address information for registered users.
         columns:
           - name: address_id
             data_type: varchar
-            description: "PK. Identificador de la dirección."
+            description: PK. Address identifier
           - name: zipcode
             data_type: number
-            description: "Código Postal de la residencia."
+            description: Zip Code of the residence
           - name: country
             data_type: varchar
-            description: "País de la residencia."
+            description: Country of the residence
           - name: address
             data_type: varchar
-            description: "Dirección de la residencia (Calle, avenida, número, puerta...)"
+            description: Full address (Street, block, door...)
           - name: state
             data_type: varchar
-            description: "Estado de la residencia."
+            description: US State where the residence is
           - name: _fivetran_deleted
             data_type: boolean
-            description: "Fecha de elminación del dato en nuestro warehouse"
+            description: Deletion date of the data in the Warehouse
           - name: _fivetran_synced
             data_type: timestamp_tz
-            description: "Fecha de carga del dato en nuestro warehouse"
+            description: Load date of the data in the Warehouse
 
       - name: events
-        description: "Tabla que recoge todos los eventos en la web del marketplace, desde visita de urls de artículos a su compra."
+        description: Table that collects all the events in the webpage, from visitng urls of products to the checkout
         columns:
           - name: event_id
             data_type: varchar
-            description: "PK. Identificador del evento."
+            description: PK. Event identifier
           - name: page_url
             data_type: varchar
-            description: "Dirección web visitada."
+            description: Web address
           - name: event_type
             data_type: varchar
-            description: "Tipo de evento, hay 4 valores posibles [checkout, package_shipped, add_to_cart, page_view]"
+            description: Event type, there are 4 possible values [checkout, package_shipped, add_to_cart, page_view]
           - name: user_id
             data_type: varchar
-            description: "FK. Identificador del usuario que realizó la acción registrada."
+            description: FK. Identifier of the user who did the regfistered action
           - name: product_id
             data_type: varchar
-            description: "FK. Identificador del producto comprado."
+            description: FK. Purchased product identifier
           - name: session_id
             data_type: varchar
-            description: "Identificación de la sesión del usuario donde se producen todas las acciones registradas."
+            description: Session identifier in which every action realised by the user is registered
           - name: created_at
             data_type: timestamp_ntz
-            description: "Fecha y hora de realización de la acción registrada."
+            description: Timestamp registering the moment of the event
           - name: order_id
             data_type: varchar
-            description: ""
+            description: Identifier of the resulting purchase order
           - name: _fivetran_deleted
             data_type: boolean
-            description: "Fecha de elminación del dato en nuestro warehouse"
+            description: Deletion date of the data in the Warehouse
           - name: _fivetran_synced
             data_type: timestamp_tz
-            description: "Fecha de carga del dato en nuestro warehouse"
+            description: Load date of the data in the Warehouse
 
       - name: order_items
-        description: "Registro del producto y cantidad de los mismos contenida en los pedidos."
+        description: Number of items for each product contained in an order
         columns:
           - name: order_id
             data_type: varchar
-            description: "FK. Identificador del pedido."
+            description: FK. Order identifier
           - name: product_id
             data_type: varchar
-            description: "FK. Identificador del producto."
+            description: FK. Product identifier
           - name: quantity
             data_type: number
-            description: "Cantidad de producto específico por pedido."
+            description: Number of products items
           - name: _fivetran_deleted
             data_type: boolean
-            description: "Fecha de eliminación del dato en nuestro warehouse"
+            description: Deletion date of the data in the Warehouse
           - name: _fivetran_synced
             data_type: timestamp_tz
-            description: "Fecha de carga del dato en nuestro warehouse"
+            description: Load date of the data in the Warehouse
 
       - name: orders
-        description: "Tabla con infomación básica sobre los pedidos."
+        description: Table containing basic information regarding the orders
         columns:
           - name: order_id
             data_type: varchar
-            description: "PK. Identificador único del pedido."
+            description: PK. Order identifier
           - name: shipping_service
             data_type: varchar
-            description: "FK. Identificador de la compañía de reparto que transporta el peido"
-          - name: shipping_cost
+            description: FK. Shipping service that delivers the order
+          - name: shipping_cost_usd
             data_type: float
-            description: "Gastos de envío."
+            description: Shipping cost in USD
           - name: address_id
             data_type: varchar
-            description: "FK. Identificador de la dirección de envío."
+            description: FK. Destination address identifier
           - name: created_at
             data_type: timestamp_tz
-            description: "Fecha y hora de creación del pedido."
+            description: Date and time at which the order was created
           - name: promo_id
             data_type: varchar
-            description: "FK. Identificador de la promoción aplicada a la compra."
+            description: FK. Identifier for the promotion applied to the order
           - name: estimated_delivery_at
             data_type: timestamp_tz
-            description: "Estimación de entrega del pedido."
+            description: Estimated delivery date for the order
           - name: order_cost
             data_type: float
-            description: "Coste total de los artículos del pedido."
+            description: Total cost of the items in the order
           - name: user_id
             data_type: varchar
-            description: "FK. Identificador del usuario que realizó el pedido."
+            description: FK. Identifier of the user who placed the order
           - name: order_total
             data_type: float
-            description: "Coste total del pedido, artículos junto con gastos de envío."
+            description: Total cost of the order, including shipping fees
           - name: delivered_at
             data_type: timestamp_tz
-            description: "Fecha de entrega del pedido."
+            description: hour and time at which the order was delivered
           - name: tracking_id
             data_type: varchar
-            description: "Número de seguimiento del pedido."
+            description: Number to track the order
           - name: status
             data_type: varchar
-            description: "Estado del envío."
+            description: "{{ doc('order_status') }}"
           - name: _fivetran_deleted
             data_type: boolean
-            description: "Fecha de eliminación del dato en nuestro warehouse."
+            description: Deletion date of the data in the Warehouse
           - name: _fivetran_synced
             data_type: timestamp_tz
-            description: "Fecha de carga del dato en nuestro warehouse."
+            description: Load date of the data in the Warehouse
 
       - name: products
-        description: "Tabla con la información referente a los productos."
+        description: Product inforamtion table
         columns:
           - name: product_id
             data_type: varchar
-            description: "PK. Identifcador del producto."
+            description: PK. Product identifier
           - name: price
             data_type: float
-            description: "Precio del producto"
+            description: Product price
           - name: name
             data_type: varchar
-            description: "Nombre del producto."
+            description: Product name
           - name: inventory
             data_type: number
-            description: "Unidades de ese producto en el almacén."
+            description: Number of product currently in the warehouse
           - name: _fivetran_deleted
             data_type: boolean
-            description: "Fecha de eliminación del dato en nuestro warehouse"
+            description: Deletion date of the data in the Warehouse
           - name: _fivetran_synced
             data_type: timestamp_tz
-            description: "Fecha de carga del dato en nuestro warehouse"
+            description: Load date of the data in the Warehouse
 
       - name: promos
-        description: "Tabla con la información referente a las posibles promociones."
+        description: Table with the information regarding the promo codes
         columns:
           - name: promo_id
             data_type: varchar
-            description: "PK. Identificador de la promoción."
+            description: PK. Promotion identifier
           - name: discount
             data_type: number
-            description: "Cantidad de descuento."
+            description: Discount amount
           - name: status
             data_type: varchar
-            description: "Indicador de si la promoción está activa o no."
+            description: Indicator of the status of the promotion, active or not active
           - name: _fivetran_deleted
             data_type: boolean
-            description: "Fecha de eliminación del dato en nuestro warehouse"
+            description: Deletion date of the data in the Warehouse
           - name: _fivetran_synced
             data_type: timestamp_tz
-            description: "Fecha de carga del dato en nuestro warehouse"
+            description: Load date of the data in the Warehouse
 
       - name: users
-        description: "Información referente a los usuarios registrados en el marketplace."
+        description: Information about the registere users in the web
         columns:
           - name: user_id
             data_type: varchar
-            description: "PK. Identificador de usuario."
+            description: PK. User identifier
           - name: updated_at
             data_type: timestamp_tz
-            description: "Última actualización de la información de usuario."
+            description: Last update of the user data
           - name: address_id
             data_type: varchar
-            description: "FK. Identificador de la dirección registrada del usuario."
+            description: FK. Address of the user
           - name: last_name
             data_type: varchar
-            description: "Apellido del usuario."
+            description: User last name
           - name: created_at
             data_type: timestamp_tz
-            description: "Fecha de creación del usuario."
+            description: Registration date of the user
           - name: phone_number
             data_type: varchar
-            description: "Número de teléfono del usuario."
+            description: User phone number
           - name: total_orders
             data_type: number
-            description: "Número total de pedidos realizados por el usuario."
+            description: Total orders placed by user
           - name: first_name
             data_type: varchar
-            description: "Nombre del usuario."
+            description: User name
           - name: email
             data_type: varchar
-            description: "Email del usuario."
+            description: User email
           - name: _fivetran_deleted
             data_type: boolean
-            description: "Fecha de eliminación del dato en nuestro warehouse."
+            description: Deletion date of the data in the Warehouse
           - name: _fivetran_synced
             data_type: timestamp_tz
-            description: "Fecha de carga del dato en nuestro warehouse."
+            description: Load date of the data in the Warehouse
+
+      - name: stg_order_status
+        description: "Posibles estados de un pedido"
+        columns:
+          - name: status_order_id
+            data_type: varchar
+            description: "PK. Identificador del estado del pedido."         
+          - name: status_order_descr
+            data_type: varchar
+            description: "Descripción del estado del pedido."
+      
+      - name: stg_shipping_services
+        description: "Información sobre los servicios de envío de pedidos."
+        columns:
+          - name: shipping_service_id
+            data_type: varchar
+            description: "PK. Identificador del servicio de envío."   
+          - name: shipping_service_name
+            data_type: varchar
+            description: "Nombre del servicio de envío."
