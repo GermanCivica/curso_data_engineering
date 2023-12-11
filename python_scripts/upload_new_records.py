@@ -37,7 +37,7 @@ def upload_new_records(snowflake_cursor, old_data, new_data):
     if not df_new_records.empty:
         df_new_records.to_csv(new_file_name, index=False)
         snowflake_cursor.execute("PUT file:/" + new_file_name.split(':', 2)[1].replace('\\', '//') + " @%" + new_data.replace('.csv', ''))
-        snowflake_cursor.execute("COPY INTO " + new_data.replace('.csv', '') + " FILE_FORMAT = (TYPE = CSV SKIP_HEADER = 1)")
+        snowflake_cursor.execute("COPY INTO " + new_data.replace('.csv', '') + " FILE_FORMAT = (TYPE = CSV SKIP_HEADER = 1) PURGE = TRUE")
         os.remove(new_file_name)
 
 if __name__ == "__main__":
