@@ -39,6 +39,7 @@ def select_data(data_id, data_type):
 def new_records_addresses():
     # Create a new single address record
     new_address = random_address.real_random_address_by_state('CA')
+    creation_timestamp = create_timestamp()
 
     ADDRESS_ID = secrets.token_hex(nbytes=16)
     ZIPCODE = new_address['postalCode']
@@ -46,7 +47,7 @@ def new_records_addresses():
     ADDRESS = new_address['address1']
     STATE = 'California'
     _FIVETRAN_DELETED = np.nan
-    _FIVETRAN_SYNCED = create_timestamp()
+    _FIVETRAN_SYNCED = creation_timestamp.replace(tzinfo=datetime.timezone.utc)
 
     headers = ['ADDRESS_ID', 'ZIPCODE', 'COUNTRY', 'ADDRESS', 'STATE', '_FIVETRAN_DELETED', '_FIVETRAN_SYNCED']
 
@@ -70,7 +71,7 @@ def new_records_user(address_record):
     FIRST_NAME = full_name.split()[1].upper()
     EMAIL = LAST_NAME + '_' + FIRST_NAME + '@civicasoft.com'
     _FIVETRAN_DELETED = np.nan
-    _FIVETRAN_SYNCED = creation_timestamp
+    _FIVETRAN_SYNCED = creation_timestamp.replace(tzinfo=datetime.timezone.utc)
 
     headers = ['USER_ID', 'UPDATED_AT', 'ADDRESS_ID', 'LAST_NAME', 'CREATED_AT', 'PHONE_NUMBER', 'TOTAL_ORDERS', 'FIRST_NAME', 'EMAIL', '_FIVETRAN_DELETED', '_FIVETRAN_SYNCED']
 
@@ -82,10 +83,11 @@ def new_records_events(user_record):
     # Generate 5 event records -> 3 page_view, 1 checkout, 1 package shipped
 
     # Common parameters
+    creation_timestamp = create_timestamp()
     USER_ID = user_record['USER_ID'].values[0]
     SESSION_ID = secrets.token_hex(nbytes=16)
     ORDER_ID = secrets.token_hex(nbytes=16)
-    _FIVETRAN_SYNCED = create_timestamp()
+    _FIVETRAN_SYNCED = creation_timestamp.replace(tzinfo=datetime.timezone.utc)
 
     headers = ['EVENT_ID', 'PAGE_URL', 'EVENT_TYPE', 'USER_ID', 'PRODUCT_ID', 'SESSION_ID', 'CREATED_AT', 'ORDER_ID', '_FIVETRAN_DELETED', '_FIVETRAN_SYNCED']
 
@@ -94,11 +96,12 @@ def new_records_events(user_record):
     products = select_random_data(3, 'products')
     page_view = []
     for product in products:
+        creation_timestamp = create_timestamp()
         EVENT_ID = secrets.token_hex(nbytes=16)
         PAGE_URL = r'https://greenary.com/product/' + product[0]
         EVENT_TYPE = 'page_view'
         PRODUCT_ID = product[0]
-        CREATED_AT = create_timestamp()
+        CREATED_AT = creation_timestamp.replace(tzinfo=datetime.timezone.utc)
         _FIVETRAN_DELETED = np.nan
 
         page_view.append([EVENT_ID, PAGE_URL, EVENT_TYPE, USER_ID, PRODUCT_ID, SESSION_ID, CREATED_AT, np.nan, _FIVETRAN_DELETED, _FIVETRAN_SYNCED])
@@ -106,29 +109,32 @@ def new_records_events(user_record):
     page_view_records = pd.DataFrame(page_view, columns=headers)
 
     # Add_to_cart event
+    creation_timestamp = create_timestamp()
     EVENT_ID = secrets.token_hex(nbytes=16)
     PAGE_URL = r'https://greenary.com/product/' + products[-1][0]
     EVENT_TYPE = 'add_to_cart'
     PRODUCT_ID = products[-1][0]
-    CREATED_AT = create_timestamp()
+    CREATED_AT = creation_timestamp.replace(tzinfo=datetime.timezone.utc)
     _FIVETRAN_DELETED = np.nan
 
     add_to_cart_record = pd.DataFrame([[EVENT_ID, PAGE_URL, EVENT_TYPE, USER_ID, PRODUCT_ID, SESSION_ID, CREATED_AT, np.nan, _FIVETRAN_DELETED, _FIVETRAN_SYNCED]], columns=headers)
 
     # Checkout event
+    creation_timestamp = create_timestamp()
     EVENT_ID = secrets.token_hex(nbytes=16)
     PAGE_URL = r'https://greenary.com/checkout/' + ORDER_ID
     EVENT_TYPE = 'checkout'
-    CREATED_AT = create_timestamp()
+    CREATED_AT = creation_timestamp.replace(tzinfo=datetime.timezone.utc)
     _FIVETRAN_DELETED = np.nan
 
     checkout_record = pd.DataFrame([[EVENT_ID, PAGE_URL, EVENT_TYPE, USER_ID, np.nan, SESSION_ID, CREATED_AT, ORDER_ID, _FIVETRAN_DELETED, _FIVETRAN_SYNCED]], columns=headers)
 
     # Package_shipped event
+    creation_timestamp = create_timestamp()
     EVENT_ID = secrets.token_hex(nbytes=16)
     PAGE_URL = r'https://greenary.com/shipping/' + ORDER_ID
     EVENT_TYPE = 'package_shipped'
-    CREATED_AT = create_timestamp()
+    CREATED_AT = creation_timestamp.replace(tzinfo=datetime.timezone.utc)
     _FIVETRAN_DELETED = np.nan
 
     package_shipped_record = pd.DataFrame([[EVENT_ID, PAGE_URL, EVENT_TYPE, USER_ID, np.nan, SESSION_ID, CREATED_AT, ORDER_ID, _FIVETRAN_DELETED, _FIVETRAN_SYNCED]], columns=headers)
@@ -139,11 +145,13 @@ def new_records_events(user_record):
 
 def new_records_order_items(events_records):
     # Create new order_items record
+    creation_timestamp = create_timestamp()
+
     ORDER_ID = events_records['ORDER_ID'].values[-1]
     PRODUCT_ID = events_records.loc[events_records['EVENT_TYPE']=='add_to_cart']['PRODUCT_ID'].values[0]
     QUANTITY =  random_with_N_digits(1)
     _FIVETRAN_DELETED = np.nan
-    _FIVETRAN_SYNCED = create_timestamp()
+    _FIVETRAN_SYNCED = creation_timestamp.replace(tzinfo=datetime.timezone.utc)
 
     headers = ['ORDER_ID', 'PRODUCT_ID', 'QUANTITY', '_FIVETRAN_DELETED', '_FIVETRAN_SYNCED']
 
@@ -152,6 +160,7 @@ def new_records_order_items(events_records):
     return order_items_new_record
 
 def new_records_orders(events_records, user_record, order_items_record):
+    creation_timestamp = create_timestamp()
     # Get shipping service and promo information
     shipping_service = select_random_data(1, 'shipping_services')
     promo_id = select_random_data(1, 'promos')
@@ -165,7 +174,7 @@ def new_records_orders(events_records, user_record, order_items_record):
     SHIPPING_COST = randint(1*100, 10*100)/100
     ADDRESS_ID = user_record['ADDRESS_ID'].values[0]
     CREATED_AT = pd.Timestamp(events_records.loc[events_records['EVENT_TYPE']=='checkout']['CREATED_AT'].values[0]).replace(tzinfo=datetime.timezone.utc)
-    PROMO_ID = promo_id[0][0]
+    PROMO_ID = promo_id[0][1]
     ESTIMATED_DELIVERY_AT = CREATED_AT + pd.to_timedelta(5, unit='D')
     ORDER_COST = order_items_record['QUANTITY'].values[0] * product['PRICE'].values[0]
     USER_ID = user_record['USER_ID'].values[0]
@@ -174,7 +183,7 @@ def new_records_orders(events_records, user_record, order_items_record):
     TRACKING_ID = secrets.token_hex(nbytes=16)
     STATUS = 'shipped'
     _FIVETRAN_DELETED = np.nan
-    _FIVETRAN_SYNCED = create_timestamp()
+    _FIVETRAN_SYNCED = creation_timestamp.replace(tzinfo=datetime.timezone.utc)
 
     headers = ['ORDER_ID', 'SHIPPING_SERVICE', 'SHIPPING_COST', 'ADDRESS_ID', 'CREATED_AT', 'PROMO_ID', 'ESTIMATED_DELIVERY_AT', 'ORDER_COST', 'USER_ID', 'ORDER_TOTAL', 'DELIVERED_AT', 'TRACKING_ID', 'STATUS', '_FIVETRAN_DELETED', '_FIVETRAN_SYNCED']
 

@@ -5,4 +5,4 @@ PROMO_ID,PROMO_NAME,DISCOUNT_USD,STATUS
 ebb061953c0454b2c8ee7b0ac615ebcd,Optional,17,inactive
 e89ab59baea830bd940c300886c50efe,Mandatory,20,inactive
 7d98ec69d6de3783d34fcd915692eda5,Digitized,11,inactive
-96eb28b7ab74dcffa4fe40054f5deed4,No Promo,0,active
+96eb28b7ab74dcffa4fe40054f5deed4,,0,active
