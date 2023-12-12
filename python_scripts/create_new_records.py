@@ -191,11 +191,11 @@ def new_records_orders(events_records, user_record, order_items_record):
 
     return order_new_record
 
-if __name__ == "__main__":
-    new_address = new_records_addresses()
-    new_user = new_records_user(new_address)
-    new_events = new_records_events(new_user)
-    new_order_items = new_records_order_items(new_events)
-    new_order = new_records_orders(new_events, new_user, new_order_items)
-    print(new_user)
+# if __name__ == "__main__":
+#     new_address = new_records_addresses()
+#     new_user = new_records_user(new_address)
+#     new_events = new_records_events(new_user)
+#     new_order_items = new_records_order_items(new_events)
+#     new_order = new_records_orders(new_events, new_user, new_order_items)
+#     print(new_user)
 
