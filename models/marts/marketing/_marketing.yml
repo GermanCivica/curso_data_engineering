@@ -1,0 +1,122 @@
+version: 2
+
+models:
+  - name: user_purchases
+    description: "Study of all the orders placed by user and products bought"
+    columns:
+      - name: user_id
+        data_type: varchar
+        description: "User identifier"
+        tests:
+          - not_null
+
+      - name: first_name
+        data_type: varchar
+        description: "User's first name"
+        tests:
+          - not_null
+
+      - name: last_name
+        data_type: varchar
+        description: "User's last name"
+        tests:
+          - not_null
+
+      - name: phone_number
+        data_type: varchar
+        description: "User's phone number"
+        tests:
+          - not_null
+
+      - name: email
+        data_type: varchar
+        description: "User's email"
+        tests:
+          - not_null
+
+      - name: total_orders_by_user
+        data_type: number
+        description: "Total orders placed by user"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: user_total_expenditure_usd
+        data_type: number
+        description: "Total expenditure by user in USD"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: user_total_shipping_cost_usd
+        data_type: number
+        description: "Total expenditure in shipping cost by user in USD"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: user_total_discount_usd
+        data_type: number
+        description: "Total savings by user on promotions in USD"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: user_total_products_bought
+        data_type: number
+        description: "Total products boought by user"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: user_diff_products_bought
+        data_type: number
+        description: "Number of different products bought by user"
+        tests:
+          - not_null
+          - no_negatives
+
+  - name: user_web_analytics
+    description: "Analysis on the sessions of the user in the web page"
+    columns:
+      - name: user_id
+        data_type: varchar
+        description: "User identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: total_user_sessions
+        data_type: number
+        description: "Total sessions registered by user"
+        tests:
+          - not_null
+          - no_negatives        
+
+      - name: perc_session_with_purchases
+        data_type: number
+        description: "Percentage of session in which the user made a purchase"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: mean_products_viewed_per_session
+        data_type: number
+        description: "Mean number of products visited by user in session"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: perc_products_purchased_after_visit
+        data_type: number
+        description: "Percentage of products that were bought by user after visitng them"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: mean_expenditure_per_session_usd
+        data_type: number
+        description: "Mean expediture of the user accounting all sessions"
+        tests:
+          - not_null
+          - no_negatives

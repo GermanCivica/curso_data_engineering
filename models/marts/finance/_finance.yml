@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: products_budget_vs_sales
+    description: "Study per month of the units sold of each product and the monthly budget of the same product"
+    columns:
+      - name: product_id
+        data_type: varchar
+        description: "Product sold identifier"
+        tests:
+          - not_null
+
+      - name: product_name
+        data_type: varchar
+        description: "Name of the sold product"
+        tests:
+          - not_null
+
+      - name: year
+        data_type: number
+        description: "Year of analysis"
+        tests:
+          - not_null
+
+      - name: month
+        data_type: number
+        description: "Month of analysis"
+        tests:
+          - not_null
+
+      - name: budget
+        data_type: number
+        description: "Budget of the product for said month and year"
+        tests:
+          - not_null
+
+      - name: total_units_sold
+        data_type: number
+        description: "Total units sold of the product in the analysed month and year"
+        tests:
+          - not_null
+
+      - name: over_budget
+        data_type: boolean
+        description: "Flag indicating if the sales for the product in said month are superior to the budget"
+        tests:
+          - not_null
+
+      - name: total_sales_product_month_usd
+        data_type: float
+        description: "Total sales of the product in the analysed month in USD"
+        tests:
+          - not_null
+
+      - name: total_shipping_cost_product_month_usd
+        data_type: number
+        description: "Total expenditure in shipping for the product in the month and year analysed"
+        tests:
+          - not_null

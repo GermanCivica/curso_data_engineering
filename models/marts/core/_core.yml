@@ -1,0 +1,179 @@
+version: 2
+
+models:
+  - name: dim_shipping
+    description: "Dimension with all the information regarding order shipping"
+    columns:
+      - name: shipping_id
+        data_type: varchar
+        description: "Shipping identifier"
+        tests:
+          - unique
+          - not_null
+
+      - name: order_id
+        data_type: varchar
+        description: "Order identifier"
+        tests:
+          - unique
+          - not_null
+
+      - name: tracking_id
+        data_type: varchar
+        description: "Track number of the shipment"
+        tests:
+          - not_null
+
+      - name: total_products_per_order
+        data_type: number
+        description: "Total number of products in the order"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: shipping_service_id
+        data_type: varchar
+        description: "Enterprise shipping the order"
+        tests:
+          - not_null
+
+      - name: total_shipping_cost_usd
+        data_type: float
+        description: "Total cost of shipment in USD"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: shipping_cost_per_item_usd
+        data_type: number
+        description: "Approximate cost of shipping for each article in order. Total_shipping_cost / #products"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: status_order_id
+        data_type: varchar
+        description: "Status of the order"
+        tests:
+          - not_null
+
+      - name: estimated_delivery_at_utc
+        data_type: timestamp_ntz
+        description: "Estimated date and time of delivery for the order"
+
+      - name: delivered_at_utc
+        data_type: timestamp_ntz
+        description: "Date and time of delivery for the order"
+
+      - name: shipped_country
+        data_type: varchar
+        description: "Country to which the order was shipped to"
+        tests:
+          - not_null
+
+      - name: shipped_state
+        data_type: varchar
+        description: "State to which the order was shipped to"
+        tests:
+          - not_null
+
+      - name: shipped_zipcode
+        data_type: number
+        description: "ZIP Code to which the order was shipped to"
+        tests:
+          - not_null
+
+      - name: shipped_address
+        data_type: varchar
+        description: "Address to which the order was shipped to"
+        tests:
+          - not_null
+
+      - name: order_data_load_utc
+        data_type: timestamp_ntz
+        description: "Date and time at which the order was placed"
+        tests:
+          - not_null
+
+  - name: fct_orders_products
+    description: "Fact table with all the individual data of each purchase in the web"
+    columns:
+      - name: event_id
+        data_type: varchar
+        description: "Purchase event in web identifier"
+        tests:
+          - not_null
+
+      - name: product_id
+        data_type: varchar
+        description: "Product identifier for the purchased product"
+        tests:
+          - not_null
+
+      - name: order_id
+        data_type: varchar
+        description: "Order in which the product purchase was included"
+        tests:
+          - not_null
+
+      - name: created_at_utc
+        data_type: timestamp_ntz
+        description: "Date and time at which the purchased occurred"
+        tests:
+          - not_null
+
+      - name: user_id
+        data_type: varchar
+        description: "User who made the purchase"
+        tests:
+          - not_null
+
+      - name: address_id
+        data_type: varchar
+        description: "Address to which the order in which the purchase was included was shipped to"
+        tests:
+          - not_null
+
+      - name: promo_id
+        data_type: varchar
+        description: "Promotion code applied to order"
+        tests:
+          - not_null
+
+      - name: price_usd
+        data_type: float
+        description: "Price of the singular purchase in USD"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: shipping_cost_usd
+        data_type: number
+        description: "Approximate individual shipping cost of the purchase in USD"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: shipping_service_id
+        data_type: varchar
+        description: "Enterprise that shipped the order"
+        tests:
+          - not_null
+
+      - name: status_order_id
+        data_type: varchar
+        description: "Status of the order"
+        tests:
+          - not_null
+
+      - name: estimated_delivery_at_utc
+        data_type: timestamp_ntz
+        description: "Estimated date and time of delivery for the order"
+
+      - name: delivered_at_utc
+        data_type: timestamp_ntz
+        description: "Date and time of delivery for the order"
+
+      - name: days_to_deliver
+        data_type: number
+        description: "Difference in days between date in which the order was placed and its delivery"
