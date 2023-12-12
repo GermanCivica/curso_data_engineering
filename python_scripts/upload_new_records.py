@@ -31,7 +31,10 @@ def upload_new_records(snowflake_cursor, old_data, new_data):
     df_actual = pd.read_csv(DATA_TABLES_PATH + new_data)
     new_file_name = DATA_TABLES_PATH + new_data.replace('.csv', '_new_records.csv')
 
+    id_column = df_snowflake.columns[0]
+
     df_new_records = df_actual[~df_actual.isin(df_snowflake)].dropna(how='all')
+    df_new_records = df_new_records.dropna(axis=0, subset=[id_column])
 
     # Upload new data to an internal stage (if there's any)
     if not df_new_records.empty:
