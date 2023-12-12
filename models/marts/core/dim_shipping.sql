@@ -1,7 +1,7 @@
 
 {{
     config(
-    materialized='table',
+    materialized='incremental',
     unique_key='shipping_id',
     on_schema_change='fail'
   )
