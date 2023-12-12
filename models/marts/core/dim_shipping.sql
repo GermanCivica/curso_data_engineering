@@ -1,7 +1,7 @@
 
 {{
     config(
-    materialized='table',
+    materialized='incremental',
     unique_key='shipping_id',
     on_schema_change='fail'
   )
@@ -12,7 +12,7 @@ WITH stg_orders AS (
     FROM {{ ref('stg_orders') }}
 {% if is_incremental() %}
 
-    WHERE (tracking_id <> '' AND date_load_utc > (select max(date_load_utc) from {{ this }}))
+    WHERE (tracking_id <> '' AND date_load_utc > (select max(order_data_load_utc) from {{ this }}))
 
 {% endif %}
 ),
@@ -28,7 +28,7 @@ stg_addresses AS (
     FROM {{ ref('stg_addresses') }}
 {% if is_incremental() %}
 
-	  where date_load_utc > (select max(date_load_utc) from {{ this }})
+	  where date_load_utc > (select max(order_data_load_utc) from {{ this }})
 
 {% endif %}
 ),
@@ -38,7 +38,7 @@ stg_order_items AS (
     FROM {{ ref('stg_order_items') }}
 {% if is_incremental() %}
 
-	  where date_load_utc > (select max(date_load_utc) from {{ this }})
+	  where date_load_utc > (select max(order_data_load_utc) from {{ this }})
 
 {% endif %}
 ),
