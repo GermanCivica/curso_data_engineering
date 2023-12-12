@@ -101,7 +101,7 @@ def new_records_events(user_record):
         PAGE_URL = r'https://greenary.com/product/' + product[0]
         EVENT_TYPE = 'page_view'
         PRODUCT_ID = product[0]
-        CREATED_AT = creation_timestamp.replace(tzinfo=datetime.timezone.utc)
+        CREATED_AT = creation_timestamp
         _FIVETRAN_DELETED = np.nan
 
         page_view.append([EVENT_ID, PAGE_URL, EVENT_TYPE, USER_ID, PRODUCT_ID, SESSION_ID, CREATED_AT, np.nan, _FIVETRAN_DELETED, _FIVETRAN_SYNCED])
@@ -114,7 +114,7 @@ def new_records_events(user_record):
     PAGE_URL = r'https://greenary.com/product/' + products[-1][0]
     EVENT_TYPE = 'add_to_cart'
     PRODUCT_ID = products[-1][0]
-    CREATED_AT = creation_timestamp.replace(tzinfo=datetime.timezone.utc)
+    CREATED_AT = creation_timestamp
     _FIVETRAN_DELETED = np.nan
 
     add_to_cart_record = pd.DataFrame([[EVENT_ID, PAGE_URL, EVENT_TYPE, USER_ID, PRODUCT_ID, SESSION_ID, CREATED_AT, np.nan, _FIVETRAN_DELETED, _FIVETRAN_SYNCED]], columns=headers)
@@ -124,7 +124,7 @@ def new_records_events(user_record):
     EVENT_ID = secrets.token_hex(nbytes=16)
     PAGE_URL = r'https://greenary.com/checkout/' + ORDER_ID
     EVENT_TYPE = 'checkout'
-    CREATED_AT = creation_timestamp.replace(tzinfo=datetime.timezone.utc)
+    CREATED_AT = creation_timestamp
     _FIVETRAN_DELETED = np.nan
 
     checkout_record = pd.DataFrame([[EVENT_ID, PAGE_URL, EVENT_TYPE, USER_ID, np.nan, SESSION_ID, CREATED_AT, ORDER_ID, _FIVETRAN_DELETED, _FIVETRAN_SYNCED]], columns=headers)
@@ -134,7 +134,7 @@ def new_records_events(user_record):
     EVENT_ID = secrets.token_hex(nbytes=16)
     PAGE_URL = r'https://greenary.com/shipping/' + ORDER_ID
     EVENT_TYPE = 'package_shipped'
-    CREATED_AT = creation_timestamp.replace(tzinfo=datetime.timezone.utc)
+    CREATED_AT = creation_timestamp
     _FIVETRAN_DELETED = np.nan
 
     package_shipped_record = pd.DataFrame([[EVENT_ID, PAGE_URL, EVENT_TYPE, USER_ID, np.nan, SESSION_ID, CREATED_AT, ORDER_ID, _FIVETRAN_DELETED, _FIVETRAN_SYNCED]], columns=headers)
