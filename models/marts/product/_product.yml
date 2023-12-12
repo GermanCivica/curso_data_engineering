@@ -1,0 +1,115 @@
+version: 2
+
+models:
+  - name: product_sales
+    description: "Analysis of web interactions and sales by product"
+    columns:
+      - name: product_id
+        data_type: varchar
+        description: "Product identifier"
+        tests:
+          - not_null
+          - unique
+              
+      - name: web_visits
+        data_type: number
+        description: "Number of times the product page has been visited"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: times_bought
+        data_type: number
+        description: "Times the product has been purchased"
+        tests:
+          - not_null
+          - no_negatives        
+
+      - name: total_units_sold
+        data_type: number
+        description: "Total units of product purchased"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: total_sales_usd
+        data_type: float
+        description: "Total sales of product in USD"
+        tests:
+          - not_null
+          - no_negatives
+
+  - name: user_session
+    description: "Study of the sessions"
+    columns:
+      - name: session_id
+        data_type: varchar
+        description: "Session identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: user_id
+        data_type: varchar
+        description: "User identifier"
+        tests:
+          - not_null
+
+      - name: first_name
+        data_type: varchar
+        description: "User's first name"
+        tests:
+          - not_null
+
+      - name: email
+        data_type: varchar
+        description: "User's email"
+        tests:
+          - not_null
+
+      - name: first_event_time_utc
+        data_type: timestamp_ntz
+        description: "Date time of start of the session"
+        tests:
+          - not_null
+
+      - name: last_event_time_utc
+        data_type: timestamp_ntz
+        description: "Date time of the end of the session"
+        tests:
+          - not_null
+
+      - name: session_length_minutes
+        data_type: number
+        description: "Total session length in minutes"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: page_view_events
+        data_type: number
+        description: "Number of product pages visited"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: add_to_cart_events
+        data_type: number
+        description: "Number of purcahses"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: checkout_events
+        data_type: number
+        description: "Number of orders placed"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: package_shipped_events
+        data_type: number
+        description: "Number of packages shipped"
+        tests:
+          - not_null
+          - no_negatives

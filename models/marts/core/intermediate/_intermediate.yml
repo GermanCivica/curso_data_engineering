@@ -1,0 +1,173 @@
+version: 2
+
+models:
+  - name: int_orders_product
+    description: "Analysis for each product in order of the quantity ordered, the total historic aggregation of those products ordered, the products ordered in the month that the analysed order was placed and the month's budget for that product"
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: "The order being analysed"
+        tests:
+          - not_null
+
+      - name: product_id
+        data_type: varchar
+        description: "The product analysed inside the order"
+        tests:
+          - not_null
+
+      - name: product_name
+        data_type: varchar
+        description: "The product name"
+
+      - name: order_month
+        data_type: number
+        description: "The month in which that order was placed"
+        tests:
+          - not_null
+
+      - name: order_year
+        data_type: number
+        description: "The year in which that order was placed"
+        tests:
+          - not_null
+
+      - name: quantity
+        data_type: number
+        description: "Quantity of the product ordered"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: total_quantity_ordered
+        data_type: number
+        description: "The historic sum of the quantities ordered for that product"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: total_quantity_in_month
+        data_type: number
+        description: "The sum of the quantities ordered for that product in the month this order was placed"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: orders_with_product_in_month
+        data_type: number
+        description: "The sum of the orders in the month that contain that product"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: total_orders_with_product
+        data_type: number
+        description: "The historic sum of the orders that contain that product"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: product_budget_for_month
+        data_type: number
+        description: ""
+        tests:
+          - not_null
+          - no_negatives
+
+  - name: int_user_events
+    description: "Historic analysis of the type of events that each user has performed in the web page"
+    columns:
+      - name: user_id
+        data_type: varchar
+        description: "User identifier"
+        tests:
+          - not_null
+
+      - name: page_view_amount
+        data_type: number
+        description: "Number of page view type events"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: add_to_cart_amount
+        data_type: number
+        description: "Number of page_view type events"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: checkout_amount
+        data_type: number
+        description: "Number of add_to_cart type events"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: package_shipped_amount
+        data_type: number
+        description: "Number of package_shipped_amount type events"
+        tests:
+          - not_null
+          - no_negatives
+
+  - name: int_user_orders
+    description: "Historic analylisis of the amount of orders, the total expenditure, the total expenditure on shipping costs and the saving in promotions by user"
+    columns:
+      - name: user_id
+        data_type: varchar
+        description: "User identifier"
+        tests:
+          - not_null
+
+      - name: first_name
+        data_type: varchar
+        description: "User's first name"
+        tests:
+          - not_null 
+
+      - name: last_name
+        data_type: varchar
+        description: "User's last name"
+        tests:
+          - not_null
+
+      - name: phone_number
+        data_type: varchar
+        description: "User's phone_number"
+        tests:
+          - not_null
+
+      - name: email
+        data_type: varchar
+        description: "User's email"
+        tests:
+          - not_null
+
+      - name: total_orders_by_user
+        data_type: number
+        description: "Number of orders the user has placed"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: user_total_expenditure_usd
+        data_type: number
+        description: "Total expenditure un USD by user"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: user_total_shipping_cost_usd
+        data_type: number
+        description: "Total expenditure in shipping costs alone in USD by user"
+        tests:
+          - not_null
+          - no_negatives
+
+      - name: user_total_discount_usd
+        data_type: number
+        description: "Total saving by using promo codes by user in USD"
+        tests:
+          - not_null
+          - no_negatives

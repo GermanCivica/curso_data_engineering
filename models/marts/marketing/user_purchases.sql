@@ -44,6 +44,7 @@ user_purchases AS (
         , count_diff_products_bought AS user_diff_products_bought
     FROM int_user_orders
     JOIN users_products ON int_user_orders.user_id = users_products.user_id
+    GROUP BY int_user_orders.user_id, first_name, last_name, phone_number, email, total_orders_by_user, user_total_expenditure_usd, user_total_shipping_cost_usd, user_total_discount_usd, user_total_products_bought, user_diff_products_bought
 )
 
 SELECT * FROM user_purchases
