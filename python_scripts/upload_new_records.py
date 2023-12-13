@@ -5,7 +5,7 @@ import os
 
 SNW_ACCOUNT = 'civicapartner.west-europe.azure'
 SNW_USER = 'ALUMNO4'
-SNW_PASSWORD = 'Cortizo1_'
+SNW_PASSWORD = '*****'
 SNW_WRH = 'WH_CURSO_DATA_ENGINEERING'
 SNW_DB = 'ALUMNO4_DEV_BRONZE_DB'
 SNW_SCHEMA = 'SQL_SERVER_DBO'
