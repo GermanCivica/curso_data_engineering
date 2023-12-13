@@ -98,6 +98,9 @@ renamed_casted AS (
     JOIN stg_orders ON order_products_events.order_id = stg_orders.order_id
     JOIN stg_products ON order_products_events.product_id = stg_products.product_id
     JOIN dim_shipping ON order_products_events.order_id = dim_shipping.order_id
+    GROUP BY   order_products_events.event_id, order_products_events.product_id, stg_orders.order_id, stg_orders.created_at_utc, order_products_events.user_id, stg_orders.address_id
+             , stg_orders.promo_id, stg_products.price_usd, dim_shipping.shipping_cost_per_item_usd, stg_orders.shipping_service_id, stg_orders.status_order_id, stg_orders.estimated_delivery_at_utc
+             , stg_orders.delivered_at_utc, days_to_deliver
     )
 
 SELECT * FROM renamed_casted
