@@ -6,7 +6,7 @@ import snowflake.connector
 
 SNW_ACCOUNT = 'civicapartner.west-europe.azure'
 SNW_USER = 'ALUMNO4'
-SNW_PASSWORD = 'Cortizo1_'
+SNW_PASSWORD = '*****'
 SNW_WRH = 'WH_CURSO_DATA_ENGINEERING'
 SNW_DB = 'ALUMNO4_DEV_BRONZE_DB'
 SNW_SCHEMA = 'SQL_SERVER_DBO'
@@ -14,7 +14,7 @@ SNW_ROLE = 'CURSO_DATA_ENGINEERING_2023'
 
 DATA_TABLES_PATH = 'C:\\Users\\germa\\Desktop\\Proyecto_final\\python_scripts\\data_tables\\'
 
-METEO_API_KEY = '3P7NUQQ6JB8A5QZS9NNM6WX9E'
+METEO_API_KEY = '******************'
 
 def get_meteo_data(city: str, dates: list[str]) -> pd.DataFrame:
     start_dates = pd.date_range(dates[0], dates[-1], freq ='MS').strftime("%Y-%m-%d").tolist()
